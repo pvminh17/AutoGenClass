@@ -1,0 +1,48 @@
+﻿public class {{EntityName}}Response {
+	private int totalRow;
+	private int pageSize;
+	private int pageIndex;
+	private double totalAmount;
+	private List<{{EntityName}}Entity> lst{{EntityName}}Entity;
+
+	public int getTotalRow() {
+		return totalRow;
+	}
+
+	public void setTotalRow(int totalRow) {
+		this.totalRow = totalRow;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getPageIndex() {
+		return pageIndex;
+	}
+
+	public void setPageIndex(int pageIndex) {
+		this.pageIndex = pageIndex;
+	}
+
+	public double getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(double totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public List<{{EntityName}}Entity> getLst{{EntityName}}Entity() {
+		return lst{{EntityName}}Entity;
+	}
+
+	public void setLst{{EntityName}}Entity(List<{{EntityName}}Entity> lst{{EntityName}}Entity) {
+		this.lst{{EntityName}}Entity = lst{{EntityName}}Entity;
+	}
+
+}

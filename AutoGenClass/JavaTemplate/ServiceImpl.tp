@@ -1,0 +1,110 @@
+﻿@Service
+public class {{EntityName}}ServiceImpl implements I{{EntityName}}Service {
+
+	@Autowired
+	@Qualifier("SyncDataSourceOracle")
+	private DataSource syncDataSource;
+
+	@Autowired
+	private I{{EntityName}}DAO {{EntityNameVar}}DAO;
+
+	@Override
+	public {{EntityName}}Response Search({{EntityName}}Request request) throws Exception {
+
+		Connection con = syncDataSource.getConnection();
+		{{EntityName}}Response response = new {{EntityName}}Response();
+		try {
+
+			con.setAutoCommit(false);
+			List<{{EntityName}}Entity> lst{{EntityName}}Entity = {{EntityNameVar}}DAO.Search(con, request);
+			con.commit();
+
+			int totalRow = lst{{EntityName}}Responses.size() > 0 ? lst{{EntityName}}Responses.get(0).getTotalRow() : 0;
+			response.setTotalRow(totalRow);
+
+			//double totalAmount = lst{{EntityName}}Responses.size() > 0
+			//		? lst{{EntityName}}Responses.get(0).getTotalAmount()
+			//		: 0;
+			//response.setTotalAmount(totalAmount);
+
+			response.setLst{{EntityName}}Entity(lst{{EntityName}}Entity);
+			// PageSize và PageIndex hiện tại
+			response.setPageIndex(request.getPageIndex());
+			response.setPageSize(request.getPageSize());
+			return response;
+		} catch (Exception e) {
+			con.rollback();
+			throw e;
+		} finally {
+			con.close();
+		}
+	}
+
+	@Override
+	public void Insert({{EntityName}}Entity request) throws Exception {
+		String username = OAuthAccessTokenConfig.getCurrentUsername().trim();
+		request.setCreatedUser(username);
+		Connection con = syncDataSource.getConnection();
+		try {
+			con.setAutoCommit(false);
+			{{EntityNameVar}}DAO.Insert(con, request);
+			con.commit();
+		} catch (Exception e) {
+			con.rollback();
+			throw e;
+		} finally {
+			con.close();
+		}
+	}
+
+	@Override
+	public void Update({{EntityName}}Entity request) throws Exception {
+		String username = OAuthAccessTokenConfig.getCurrentUsername().trim();
+		request.setUpdatedUser(username);
+		Connection con = syncDataSource.getConnection();
+		try {
+			con.setAutoCommit(false);
+			{{EntityNameVar}}DAO.Update(con, request);
+			con.commit();
+		} catch (Exception e) {
+			con.rollback();
+			throw e;
+		} finally {
+			con.close();
+		}
+	}
+
+	@Override
+	public void Delete({{EntityName}}Entity request) throws Exception {
+		String deletedUser = OAuthAccessTokenConfig.getCurrentUsername().trim();
+		Connection con = syncDataSource.getConnection();
+		try {
+			con.setAutoCommit(false);
+			{{EntityNameVar}}DAO.Delete(con, request.get{{EntityName}}ID(), deletedUser);
+			con.commit();
+		} catch (Exception e) {
+			con.rollback();
+			throw e;
+		} finally {
+			con.close();
+		}
+	}
+
+	@Override
+	public {{{EntityName}}Entity LoadInfo({{EntityName}}Entity request) throws Exception {
+		Connection con = syncDataSource.getConnection();
+		{{EntityName}}Entity result = null;
+		try {
+			con.setAutoCommit(false);
+			result = {{EntityNameVar}}DAO.LoadInfo(con, request.get{{EntityName}}ID());
+			con.commit();
+			return result;
+		} catch (Exception e) {
+			con.rollback();
+			throw e;
+		} finally {
+			con.close();
+		}
+	}
+
+}

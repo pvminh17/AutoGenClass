@@ -1,0 +1,46 @@
+﻿public class {{EntityName}}Request{
+	private int searchType;
+	private String keyword;
+	private java.sql.Date fromDate;
+	private java.sql.Date toDate;
+	private int pageSize;
+	private int pageIndex;
+
+	public int getSearchType() {
+		return searchType;
+	}
+	public void setSearchType(int searchType) {
+		this.searchType = searchType;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	public java.sql.Date getFromDate() {
+		return fromDate;
+	}
+	public void setFromDate(java.sql.Date fromDate) {
+		this.fromDate = fromDate;
+	}
+	public java.sql.Date getToDate() {
+		return toDate;
+	}
+	public void setToDate(java.sql.Date toDate) {
+		this.toDate = toDate;
+	}
+	public int getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+	public int getPageIndex() {
+		return pageIndex;
+	}
+	public void setPageIndex(int pageIndex) {
+		this.pageIndex = pageIndex;
+	}
+
+}

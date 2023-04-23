@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoGenClass.Extractor
+namespace AutoGenClass.Common
 {
-    public class DatabaseColumn
+    public class Entity
     {
         public string Name { get; set; }
-        public string DataType { get; set; }
-        public bool IsPrimaryKey { get; set; }
+        public List<Property> Properties { get; set; }
     }
 }

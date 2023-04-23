@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Entity.cs" />
     <Compile Include="Converter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +74,7 @@
     <Compile Include="Converters\DDLtoJavaClass.cs" />
     <Compile Include="Converters\DictionaryWord.cs" />
     <Compile Include="Extractor\DatabaseColumn.cs" />
+    <Compile Include="Extractor\DatabaseTable.cs" />
     <Compile Include="Extractor\IExtractor.cs" />
     <Compile Include="Common\Property.cs" />
     <Compile Include="Converters\Utility.cs" />
@@ -91,6 +93,24 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="JavaTemplate\DAOImpl.tp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="JavaTemplate\IDAO.tp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="JavaTemplate\IService.tp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="JavaTemplate\Request.tp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="JavaTemplate\Response.tp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="JavaTemplate\ServiceImpl.tp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

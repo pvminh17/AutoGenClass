@@ -13,6 +13,7 @@ namespace AutoGenClass
 {
     public partial class Converter : Form
     {
+        private DictionaryWord dicWord = new DictionaryWord("dicWord.txt", true);
         public Converter()
         {
             InitializeComponent();
@@ -25,7 +26,7 @@ namespace AutoGenClass
                 if (!string.IsNullOrEmpty(tboxSrc.Text))
                 {
                     DDLtoJavaClass dDLtoJavaClass = new DDLtoJavaClass();
-                    string result = dDLtoJavaClass.Process(tboxSrc.Text);
+                    string result = dDLtoJavaClass.Process(tboxSrc.Text, txtCusEntityName.Text.Trim());
                     tboxDes.Text = result;
                 }
             }
@@ -33,7 +34,113 @@ namespace AutoGenClass
             {
                 MessageBox.Show(objex.ToString(), objex.Message);
             }
-           
+        }
+
+        private void ToIDAO_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(tboxSrc.Text))
+                {
+                    DDLtoJavaClass dDLtoJavaClass = new DDLtoJavaClass();
+                    string result = dDLtoJavaClass.ToIDAO(tboxSrc.Text, txtCusEntityName.Text.Trim());
+                    tboxDes.Text = result;
+                }
+            }
+            catch (Exception objex)
+            {
+                MessageBox.Show(objex.ToString(), objex.Message);
+            }
+        }
+
+        private void buttonToDAOImpl_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(tboxSrc.Text))
+                {
+                    DDLtoJavaClass dDLtoJavaClass = new DDLtoJavaClass();
+                    string result = dDLtoJavaClass.ToDAOImpl(tboxSrc.Text, txtCusEntityName.Text.Trim());
+                    tboxDes.Text = result;
+                }
+            }
+            catch (Exception objex)
+            {
+                MessageBox.Show(objex.ToString(), objex.Message);
+            }
+        }
+
+        private void buttonToIService_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(tboxSrc.Text))
+                {
+                    DDLtoJavaClass dDLtoJavaClass = new DDLtoJavaClass();
+                    string result = dDLtoJavaClass.ToIService(tboxSrc.Text, txtCusEntityName.Text.Trim());
+                    tboxDes.Text = result;
+                }
+            }
+            catch (Exception objex)
+            {
+                MessageBox.Show(objex.ToString(), objex.Message);
+            }
+        }
+
+        private void buttonToServiceImpl_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(tboxSrc.Text))
+                {
+                    DDLtoJavaClass dDLtoJavaClass = new DDLtoJavaClass();
+                    string result = dDLtoJavaClass.ToServiceImpl(tboxSrc.Text, txtCusEntityName.Text.Trim());
+                    tboxDes.Text = result;
+                }
+            }
+            catch (Exception objex)
+            {
+                MessageBox.Show(objex.ToString(), objex.Message);
+            }
+        }
+
+        private void buttonToRequest_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(tboxSrc.Text))
+                {
+                    DDLtoJavaClass dDLtoJavaClass = new DDLtoJavaClass();
+                    string result = dDLtoJavaClass.ToRequest(tboxSrc.Text, txtCusEntityName.Text.Trim());
+                    tboxDes.Text = result;
+                }
+            }
+            catch (Exception objex)
+            {
+                MessageBox.Show(objex.ToString(), objex.Message);
+            }
+        }
+
+        private void buttonToResponse_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(tboxSrc.Text))
+                {
+                    DDLtoJavaClass dDLtoJavaClass = new DDLtoJavaClass();
+                    string result = dDLtoJavaClass.ToResponse(tboxSrc.Text, txtCusEntityName.Text.Trim());
+                    tboxDes.Text = result;
+                }
+            }
+            catch (Exception objex)
+            {
+                MessageBox.Show(objex.ToString(), objex.Message);
+            }
+        }
+
+        private void btnAutoCamel_Click(object sender, EventArgs e)
+        {
+            txtAutoCamel.Text = dicWord.ToCamel(txtAutoCamel.Text.Trim());
         }
     }
 }

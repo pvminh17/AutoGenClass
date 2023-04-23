@@ -1,0 +1,142 @@
+﻿
+@Repository
+public class {{EntityName}}DAOImpl implements I{{EntityName}}DAO {
+	@Autowired
+	@Qualifier("SyncDataSourceOracle")
+	private DataSource syncDataSource;
+
+	@Override
+	public List<{{EntityName}}Entity> Search(Connection refcon, {{EntityName}}Request request) throws Exception {
+		Connection con;
+		if (refcon == null) {
+			con = syncDataSource.getConnection();
+		} else {
+			con = refcon;
+		}
+		List<{{EntityName}}Entity> lstResutl = new ArrayList<{{EntityName}}Entity>();
+		try (CallableStatement pStmt = con.prepareCall("{call {{STORE_SRH}}(?,?,?,?)}")) {
+
+			pStmt.registerOutParameter(1, OracleTypes.REF_CURSOR);
+			pStmt.setObject(2, request.getFromDate());
+			pStmt.setObject(3, request.getToDate());
+			pStmt.setObject(4, request.getKeyword());
+			pStmt.setObject(5, request.getPageSize());
+			pStmt.setObject(6, request.getPageIndex());
+			pStmt.execute();
+			ResultSet resultSet = (ResultSet) pStmt.getObject(1);
+
+			while (resultSet.next()) {
+				ModelMapper modelMapper = new ModelMapper();
+				{{EntityName}}Entity obj = modelMapper.map(MappingHelper.MappingResultSetToObject(resultSet),
+						{{EntityName}}Entity.class);
+				lstResutl.add(obj);
+			}
+			return lstResutl;
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (refcon == null)
+				con.close();
+		}
+	}
+
+	@Override
+	public void Insert(Connection refcon, {{EntityName}}Entity entity) throws Exception {
+		Connection con;
+		if (refcon == null) {
+			con = syncDataSource.getConnection();
+		} else {
+			con = refcon;
+		}
+		try (CallableStatement pStmt = con
+				.prepareCall("{call {{STORE_INS_STM}}}")) {
+			pStmt.registerOutParameter(1, OracleTypes.VARCHAR);
+{{LST_INSERT_PRO}}
+			//entity.setID(pStmt.getString(1));
+			pStmt.execute();
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (refcon == null) {
+				con.close();
+			}
+		}
+
+	}
+
+	@Override
+	public void Update(Connection refcon, {{EntityName}}Entity entity) throws Exception {
+		Connection con;
+		if (refcon == null) {
+			con = syncDataSource.getConnection();
+		} else {
+			con = refcon;
+		}
+		try (CallableStatement pStmt = con.prepareCall("{call {{STORE_UPD_STM}}}")) {
+{{LST_UPDATE_PRO}}
+			pStmt.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if (refcon == null) {
+				con.close();
+			}
+		}
+
+	}
+
+	@Override
+	public void Delete(Connection refcon, {{PRIMARY_KEY_DATA_TYPE}} {{PRIMARY_KEY}}, String deletedUser) throws Exception {
+		Connection con;
+		if (refcon == null) {
+			con = syncDataSource.getConnection();
+		} else {
+			con = refcon;
+		}
+		try (CallableStatement pStmt = con.prepareCall("{call {{STORE_DEL}}(?,?)}")) {
+			pStmt.setObject(1, {{PRIMARY_KEY}});
+			pStmt.setObject(2, deletedUser);
+			pStmt.execute();
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (refcon == null) {
+				con.close();
+			}
+		}
+	}
+
+	@Override
+	public {{EntityName}}Entity LoadInfo(Connection refcon, {{PRIMARY_KEY_DATA_TYPE}} {{PRIMARY_KEY}}) throws Exception {
+		Connection con;
+		if (refcon == null) {
+			con = syncDataSource.getConnection();
+		} else {
+			con = refcon;
+		}
+		{{EntityName}}Entity result = null;
+		try (CallableStatement pStmt = con.prepareCall("{call {{STORE_SEL}}(?,?)}")) {
+
+			pStmt.registerOutParameter(1, OracleTypes.REF_CURSOR);
+			pStmt.setObject(2, {{PRIMARY_KEY}});
+			pStmt.execute();
+			ResultSet resultSet = (ResultSet) pStmt.getObject(1);
+
+			if (resultSet.next()) {
+				ModelMapper modelMapper = new ModelMapper();
+				result = modelMapper.map(MappingHelper.MappingResultSetToObject(resultSet),
+						{{EntityName}}Entity.class);
+			}
+			return result;
+		} catch (Exception e) {
+			if (refcon == null)
+				con.rollback();
+			throw e;
+		} finally {
+			if (refcon == null)
+				con.close();
+		}
+	}
+
+}

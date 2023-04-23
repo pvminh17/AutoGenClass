@@ -1,0 +1,13 @@
+﻿public interface I{{EntityName}}DAO {
+
+	public List<{{EntityName}}Entity> Search(Connection refcon, {{EntityName}}Request request) throws Exception;
+
+	void Insert(Connection refcon, {{EntityName}}Entity entity) throws Exception;
+
+	void Update(Connection refcon, {{EntityName}}Entity entity) throws Exception;
+	
+	void Delete(Connection refcon, {{PRIMARY_KEY_DATA_TYPE}} {{PRIMARY_KEY}}, String deletedUser) throws Exception;
+
+	{{EntityName}}Entity LoadInfo(Connection refcon, {{PRIMARY_KEY_DATA_TYPE}} {{PRIMARY_KEY}}) throws Exception;
+
+}

@@ -1,0 +1,13 @@
+﻿public interface I{{EntityName}}Service {
+
+	{{EntityName}}Response Search({{EntityName}}Request request) throws Exception;
+
+	void Insert({{EntityName}}Request request) throws Exception;
+
+	void Update({{EntityName}}Entity request) throws Exception;
+
+	public void Delete({{EntityName}}Entity request) throws Exception;
+
+	{{EntityName}}Entity LoadInfo({{EntityName}}Entity request) throws Exception;
+
+}
