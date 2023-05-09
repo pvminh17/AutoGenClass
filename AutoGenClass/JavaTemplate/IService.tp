@@ -2,7 +2,7 @@
 
 	{{EntityName}}Response Search({{EntityName}}Request request) throws Exception;
 
-	void Insert({{EntityName}}Request request) throws Exception;
+	void Insert({{EntityName}}Entity request) throws Exception;
 
 	void Update({{EntityName}}Entity request) throws Exception;
 

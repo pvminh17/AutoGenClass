@@ -14,14 +14,14 @@ public class {{EntityName}}DAOImpl implements I{{EntityName}}DAO {
 			con = refcon;
 		}
 		List<{{EntityName}}Entity> lstResutl = new ArrayList<{{EntityName}}Entity>();
-		try (CallableStatement pStmt = con.prepareCall("{call {{STORE_SRH}}(?,?,?,?)}")) {
+		try (CallableStatement pStmt = con.prepareCall("{call {{STORE_SRH}}(?,?,?,?,?,?)}")) {
 
 			pStmt.registerOutParameter(1, OracleTypes.REF_CURSOR);
 			pStmt.setObject(2, request.getFromDate());
 			pStmt.setObject(3, request.getToDate());
 			pStmt.setObject(4, request.getKeyword());
-			pStmt.setObject(5, request.getPageSize());
-			pStmt.setObject(6, request.getPageIndex());
+			pStmt.setObject(5, request.getPageIndex());
+			pStmt.setObject(6, request.getPageSize());
 			pStmt.execute();
 			ResultSet resultSet = (ResultSet) pStmt.getObject(1);
 

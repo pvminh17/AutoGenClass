@@ -63,12 +63,12 @@ namespace AutoGenClass.Converters
 
                 resut += "    private ";
 
-                if (column.Name.IndexOf("IS") == 0)
-                {
-                    resut += "boolean ";
-                }
-
-                else if (dicDBTypeToJavaType.ContainsKey(column.DataType))
+                //if (column.Name.IndexOf("IS") == 0)
+                //{
+                //    resut += "boolean ";
+                //}
+                //else
+                if (dicDBTypeToJavaType.ContainsKey(column.DataType))
                     resut += dicDBTypeToJavaType[column.DataType] + " ";
                 else
                 {
@@ -77,6 +77,9 @@ namespace AutoGenClass.Converters
                 resut += dictionaryWord.ToCamel(column.Name) + "; \n";
                 //resut += column.Name + "; \n";
             }
+
+            resut += "    private long totalRow; \n";
+
             resut += "}";
             return resut;
         }
@@ -105,11 +108,11 @@ namespace AutoGenClass.Converters
                 Property property = new Property();
                 property.AccessModifier = "private";
 
-                if (column.Name.IndexOf("IS") == 0)
-                {
-                    property.DataType = "boolean";
-                }
-                else
+                //if (column.Name.IndexOf("IS") == 0)
+                //{
+                //    property.DataType = "boolean";
+                //}
+                //else
                 if (dicDBTypeToJavaType.ContainsKey(column.DataType))
                 {
                     property.DataType = dicDBTypeToJavaType[column.DataType];
@@ -122,6 +125,13 @@ namespace AutoGenClass.Converters
                 property.Name = dictionaryWord.ToCamel(column.Name);
                 entity.Properties.Add(property);
             }
+            entity.Properties.Add(new Property()
+            {
+                AccessModifier = "private",
+                DataType = "long",
+                IsPrimaryKey = false,
+                Name = "totalRow"
+            });
             return entity;
         }
 
@@ -165,7 +175,7 @@ namespace AutoGenClass.Converters
             {
                 if (lstExcludeIns.Any(str => str.ToLower().Equals(entity.Properties[i].Name.ToLower()))) continue;
                 count++;
-                lstInsertParam += string.Format("\t\t\tpStmt.setObject({0}, request.get{1}());\n",
+                lstInsertParam += string.Format("\t\t\tpStmt.setObject({0}, entity.get{1}());\n",
                                     count + 1,
                                     Utility.FirstCharToUpper(entity.Properties[i].Name));
 
@@ -186,7 +196,7 @@ namespace AutoGenClass.Converters
             {
                 if (lstExcludeUpd.Any(str => str.ToLower().Equals(entity.Properties[i].Name.ToLower()))) continue;
                 count++;
-                lstUpdateParam += string.Format("\t\t\tpStmt.setObject({0}, request.get{1}());\n",
+                lstUpdateParam += string.Format("\t\t\tpStmt.setObject({0}, entity.get{1}());\n",
                                     count,
                                     Utility.FirstCharToUpper(entity.Properties[i].Name));
 

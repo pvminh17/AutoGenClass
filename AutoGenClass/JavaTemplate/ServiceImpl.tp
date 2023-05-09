@@ -19,7 +19,7 @@ public class {{EntityName}}ServiceImpl implements I{{EntityName}}Service {
 			List<{{EntityName}}Entity> lst{{EntityName}}Entity = {{EntityNameVar}}DAO.Search(con, request);
 			con.commit();
 
-			int totalRow = lst{{EntityName}}Responses.size() > 0 ? lst{{EntityName}}Responses.get(0).getTotalRow() : 0;
+			int totalRow = lst{{EntityName}}Entity.size() > 0 ? lst{{EntityName}}Entity.get(0).getTotalRow() : 0;
 			response.setTotalRow(totalRow);
 
 			//double totalAmount = lst{{EntityName}}Responses.size() > 0
@@ -91,7 +91,7 @@ public class {{EntityName}}ServiceImpl implements I{{EntityName}}Service {
 	}
 
 	@Override
-	public {{{EntityName}}Entity LoadInfo({{EntityName}}Entity request) throws Exception {
+	public {{EntityName}}Entity LoadInfo({{EntityName}}Entity request) throws Exception {
 		Connection con = syncDataSource.getConnection();
 		{{EntityName}}Entity result = null;
 		try {
